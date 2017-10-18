@@ -56,26 +56,26 @@
         } else {
             preview.src = "";
         }
+		$("#irudiBistaratua").show();
     }
+	function deleteIrudiBistaratua() {
+		$("#irudiBistaratua").hide();
+	}
     $(document).ready(function(){
 
         $.postaZuzena = function(){
             var balioa= $("#posta").val();
-            /*^[a-zA-Z]{2,20}[0-9]{3}@[a-zA-Z]{0,20}(ikasle)?$*/
-            /* /^[a-zA-Z]{3}[0-9]{2}[@](?:[a-zA-Z0-9-]{0,61})ikasle.[a-zA-Z0-9]{0,20}.eus$/ */
-            if (balioa.match((/^[a-zA-Z]{1,20}[0-9]{3}@ikasle.ehu.((eus)|(es))$/))){
+            if (balioa.match((/^[a-zA-Z]{2,20}[0-9]{3}@ikasle\.ehu\.((eus)|(es))$/))){
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         }
         $.denakBeteta = function(){
-            if (($("#posta").val()!=="") &&($("#galderaTestua").val()!=="")&&($("#erantzunZuzena").val()!=="")&&($("#erantzunOkerra1").val()!=="")
-                &&($("#erantzunOkerra2").val()!=="")&($("#erantzunOkerra3").val()!=="")&($("#galderaZail").val()!=="") &($("#galderaArloa").val()!=="")){
+            if (($("#posta").val().length>0) &&($("#galderaTestua").val().length>0)&&($("#erantzunZuzena").val().length>0)&&($("#erantzunOkerra1").val().length>0)
+                &&($("#erantzunOkerra2").val().length>0)&($("#erantzunOkerra3").val().length>0)&($("#galderaZail").val().length>0) &($("#galderaArloa").val().length>0)){
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         }
@@ -107,7 +107,7 @@
 
 	</script>
 <titulua>Galdera sortu:</titulua>
-<form  id="galderenF" name="galderenF"  action="proba.php" method="post" target="_blank">
+<form  id="galderenF" name="galderenF"  action="addQuestion.php" method="post" target="_blank">
     <label for="posta">Posta elektronikoa(*):</label>
     <input type="text" name="posta" id="posta"/>
     <br/>
@@ -134,14 +134,14 @@
     <label for="galderaArloa">Galderaren arloa(*):</label>
     <input type="text" name="galderaArloa" id="galderaArloa"/>
     <br/>
-    <label for="file-upload">Irudia(hautazkoa):</label>
-    <input type="file" name="file-uploado" id="file-upload" onchange="previewFile()">
+    <label for="irudia">Irudia(hautazkoa):</label>
+    <input type="file" name="irudia" id="irudia" onchange="previewFile()" >
     <br/>
     <br/><br/>
 	<label for="botoia">&nbsp</label>
     <input id="botoia" type="submit" value="Bidali" > &nbsp
-    <input type="reset" value="Borratu" id="reset"><br><br>
+    <input type="reset" value="Borratu" id="reset" onclick="deleteIrudiBistaratua()"><br><br>
 </form>
-<img src="" height="300" >
+<img src="" id="irudiBistaratua" height="200" width="200" style="display: none;">
 </body>
 </html>

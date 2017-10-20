@@ -1,6 +1,9 @@
 <?php 
 
-include 'configEzarri.php';
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "Quiz";
 
 // Konexioa sortu
 $connection = new mysqli($servername, $username, $password, $dbname);
@@ -10,7 +13,7 @@ if ($connection->connect_error) {
 }
 
 // SELECT taula jasotzeko
-$SQL_QUIZ = "SELECT * FROM questions";
+$SQL_QUIZ = "SELECT * FROM Questions";
 
 // Konexioa hartuta, Query-a egin eta emaitza array batean jaso
 $emaitza = $connection->query($SQL_QUIZ);

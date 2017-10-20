@@ -26,7 +26,10 @@
             float: left;
             text-align: left;
         }
-
+		p {
+			width=300px; 
+			style =text-align: left;
+		}
         select {
             display: inline-block;
             float: left;
@@ -34,6 +37,7 @@
         .erantzuna{
             width: 350px;
         }
+		
     </style>
 </head>
 
@@ -87,19 +91,19 @@
                         if ($("#galderaTestua").val().length>=10){
                             return true;
                         } else {
-                            window.alert("Galderak gutxienez 10 karakterekoa izan behar du");
+                            window.alert("Galderak gutxienez 10 karakterekoa izan behar du.");
                             return false;
                         }
                     } else {
-                        window.alert("Zailtasunak zenbaki osoa izan behar du eta 1-5 artekoa");
+                        window.alert("Zailtasunak zenbaki osoa izan behar du eta 1-5 artekoa.");
                         return false;
                     }
-                } else{
-                    window.alert("posta elektonikoa okerra da");
+                } else {
+                    window.alert("Posta Elektonikoa okerra da.");
                     return false;
                 }
             } else {
-                window.alert("datu guztiak bete behar dira");
+                window.alert("Datu guztiak bete behar dira.");
                 return false;
             }
         })
@@ -107,41 +111,39 @@
 
 	</script>
 <titulua>Galdera sortu:</titulua>
-<form  id="galderenF" name="galderenF"  action="addQuestion.php" method="post" target="_blank">
-    <label for="posta">Posta elektronikoa(*):</label>
-    <input type="text" name="posta" id="posta"/>
-    <br/>
-    <label for="galderaTestua">Galderaren testua(*):</label>
+<p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
+<form  id="galderenF" name="galderenF"  action="addQuestionwithImage.php" method="post"  enctype="multipart/form-data" target="_blank">
+    <label for="posta">Posta elektronikoa(*): </label>
+    <input type="text" name="posta" id="posta" class="erantzuna"/>
+    <br/><br/>
+    <label for="galderaTestua">Galderaren testua(*): </label>
     <input type="text" name="galderaTestua"  class="erantzuna" id="galderaTestua" height="2000px"/>
-    <br/>
-    <label for="erantzunZuzena">Erantzun zuzena(*):</label>
+    <br/><br/>
+    <label for="erantzunZuzena">Erantzun zuzena(*): </label>
     <input type="text" name="erantzunZuzena" class="erantzuna" id="erantzunZuzena" width="600px"/>
-    <br/>
-    <label for="erantzunOkerra1">Erantzun okerra1(*):</label>
+    <br/><br/>
+    <label for="erantzunOkerra1">Erantzun okerra1(*): </label>
     <input type="text" name="erantzunOkerra1" class="erantzuna" id="erantzunOkerra1" width="600px"/>
-    <br/>
-    <label for="erantzunOkerra2">Erantzun okerra2(*):</label>
+    <br/><br/>
+    <label for="erantzunOkerra2">Erantzun okerra2(*): </label>
     <input type="text" name="erantzunOkerra2" class="erantzuna" id="erantzunOkerra2" width="600px"/>
-    <br/>
-
-    <label for="erantzunOkerra3">Erantzun okerra3(*):</label>
+    <br/><br/>
+    <label for="erantzunOkerra3">Erantzun okerra3(*): </label>
     <input type="text" name="erantzunOkerra3" class="erantzuna" id="erantzunOkerra3" width="600px"/>
-    <br/>
-
-    <label for="galderaZail">Galderaren zailtasuna(1-5)(*):</label>
+    <br/><br/>
+    <label for="galderaZail">Galderaren zailtasuna(1-5)(*): </label>
     <input type="text" name="galderaZail" id="galderaZail"/>
-    <br/>
-    <label for="galderaArloa">Galderaren arloa(*):</label>
+    <br/><br/>
+    <label for="galderaArloa">Galderaren arloa(*): </label>
     <input type="text" name="galderaArloa" id="galderaArloa"/>
-    <br/>
-    <label for="irudia">Irudia(hautazkoa):</label>
+    <br/><br/>
+    <label for="irudia">Irudia(hautazkoa): </label>
     <input type="file" name="irudia" id="irudia" onchange="previewFile()" >
-    <br/>
     <br/><br/>
 	<label for="botoia">&nbsp</label>
-    <input id="botoia" type="submit" value="Bidali" > &nbsp
+    <input id="botoia" type="submit" value="Bidali" name="botoia" > &nbsp
     <input type="reset" value="Borratu" id="reset" onclick="deleteIrudiBistaratua()"><br><br>
 </form>
-<img src="" id="irudiBistaratua" height="200" width="200" style="display: none;">
+<img src="" id="irudiBistaratua" width="200" style="display: none;">
 </body>
 </html>

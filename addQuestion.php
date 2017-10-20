@@ -18,7 +18,7 @@ $galderaZail = $_POST['galderaZail'];
 $galderaArloa = $_POST['galderaArloa'];
 //$irudia = $_POST['irudia']
 
-$sql = "INSERT INTO questions (PostaElektronikoa, Galdera, ErantzunZuzena, ErantzunOkerra1, ErantzunOkerra2, ErantzunOkerra3, GalderaZailtasuna, GalderaArloa) 
+$sql = "INSERT INTO Questions (PostaElektronikoa, Galdera, ErantzunZuzena, ErantzunOkerra1, ErantzunOkerra2, ErantzunOkerra3, GalderaZailtasuna, GalderaArloa) 
 VALUES ('$postaElektronikoa', '$galdera', '$erantzunZuzena', '$erantzunOkerra1', '$erantzunOkerra2', '$erantzunOkerra3', '$galderaZail', '$galderaArloa')";
 
 if ($connection->query($sql) === TRUE) {
@@ -28,8 +28,7 @@ if ($connection->query($sql) === TRUE) {
 	
 } else {
     echo "Error: " . $sql . "<br>" . $connection->error;
-	echo nl2br ("\n");
-	echo "<a href = addQuestion.html > Errorea egon da. Saiatu berriro galdera sartzen. Klikatu hemen.</a>";
+	echo "<a href = addQuestion.html >Errorea egon da. Saiatu berriro galdera sartzen. Klikatu hemen.</a>";
 	
 }
 

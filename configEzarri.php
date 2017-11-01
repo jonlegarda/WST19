@@ -1,12 +1,12 @@
 <?php
 
-$local = 1;
+$local = 0;
 
 if ($local == 0) {
 	$servername = "localhost";
-	$username = "id2943088_ws19";
+	$username = "id2943088_ws19_lab3";
 	$password = "";
-	$dbname = "id2943088_quiz";
+	$dbname = "id2943088_quizlab3";
 } else {
 	$servername = "localhost";
 	$username = "root";

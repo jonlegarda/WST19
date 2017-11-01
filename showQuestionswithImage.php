@@ -15,6 +15,14 @@ $SQL_QUIZ = "SELECT * FROM questionswithimage";
 // Konexioa hartuta, Query-a egin eta emaitza array batean jaso
 $emaitza = $connection->query($SQL_QUIZ);
 
+$postaElektronikoa=$_GET["ePosta"];
+echo "Posta: ". $postaElektronikoa;
+echo "<br>";
+// Erakutsiko dugu beste lekuetara joateko estekak
+echo "<a href = addQuestion.php?ePosta=$postaElektronikoa>Beste galdera igo.</a>";
+echo "<br>";
+echo "<a href = layoutR.php?ePosta=$postaElektronikoa>Menura itzuli.</a>";
+echo "<br>";
 // Taula bat definituko dugu;
 echo '<table border=1><tr><th> ID </th><th> E-Maila </th><th> Galdera </th><th> Erantzun Zuzena </th><th> 
 Erantzun Okerra 1 </th><th> Erantzun Okerra 2 </th><th> Erantzun Okerra 3 </th><th> Zailtasuna </th><th> Arloa </th><th> Irudia </th></tr>';

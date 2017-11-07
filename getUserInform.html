@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Add question </title>
+
+    <style>
+        body {
+            background-color: cadetblue;
+        }
+        titulua{
+            font-style: italic;
+            font-size: 40px;
+            color: navy;
+        }
+        label {
+            display: inline-block;
+            float: left;
+            clear: left;
+            width: 300px;
+            text-align: right;
+        }
+
+        input {
+            display: inline-block;
+            float: left;
+            text-align: left;
+        }
+		p {
+			width=300px; 
+			style =text-align: left;
+		}
+        select {
+            display: inline-block;
+            float: left;
+        }
+        .erantzuna{
+            width: 350px;
+        }
+		
+    </style>
+</head>
+
+
+<body>
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+<script>
+    /*function autocomplete() {
+	window.alert("mezua");
+	window.alert(epostenZer[[0]].eposta);
+		$.get('erabiltzaileak.xml', function(d){
+		var epostenZer = $(d).children();
+		var aurkitua = false;
+		var kopurua= epostenZer.length;
+		var i=0;
+		
+		while(i<kopurua && !aurkitua){
+			if($('#posta').val== epostenZer[i].eposta)){
+				aurkitua=true;
+			}
+			¡++;
+			
+			}));
+		}
+		})*/
+		function autoComplete() {
+		
+		$.get('erabiltzaileak.xml', function(d){
+		var epostenZer = $(d).children().children();
+		
+		/*window.alert(epostenZer.length);*/
+		var aurkitua = false;
+		var kopurua= epostenZer.length;
+		var i=0;
+		while(i<kopurua && !aurkitua){
+		var eposta= epostenZer[i].getElementsByTagName("eposta")[0].innerHTML;
+		var telefonoa= epostenZer[i].getElementsByTagName("telefonoa")[0].innerHTML;
+		var izena= epostenZer[i].getElementsByTagName("izena")[0].innerHTML;
+		var abizena1= epostenZer[i].getElementsByTagName("abizena1")[0].innerHTML;
+		var abizena2= epostenZer[i].getElementsByTagName("abizena2")[0].innerHTML;
+
+			if($('#posta').val()== epostenZer[i].getElementsByTagName("eposta")[0].innerHTML){
+				aurkitua=true;
+				$('#telefono').val(telefonoa);
+				$('#name').val(izena);
+				$('#surname').val(abizena1);
+			}
+			 
+			i++;
+			}
+			if(!aurkitua){
+			window.alert("ez da korreo hori aurkitu");
+			$('#telefono').val('');
+				$('#name').val('');
+				$('#surname').val('');
+			}
+		})
+		}
+		
+        
+	</script>
+<titulua>Type an student's valid email... <br/>to get his/her personal record</titulua>
+<form  id="galderenF" name="galderenF"   action="" method="post"  target="_blank">
+    <label for="posta">student email: </label>
+    <input type="text" name="posta" id="posta" class="erantzuna" value=''/>
+    <br/><br/>
+    <label for="telefono">Telephone number: </label>
+    <input type="text" name="telefono"  class="erantzuna" id="telefono" height="2000px"/>
+    <br/><br/>
+    <label for="name">student name: </label>
+    <input type="text" name="name" class="erantzuna" id="name" width="600px"/>
+    <br/><br/>
+    <label for="surname">student surname: </label>
+    <input type="text" name="surname" id="surname" >
+    <br/><br/>
+	
+    </form>
+	<label for="botoia">&nbsp</label>
+    <input id="botoia" type="submit" value="Autocomplete" name="botoia" onclick="autoComplete()" >
+	
+</body>
+</html>

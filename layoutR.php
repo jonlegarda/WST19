@@ -33,17 +33,26 @@
 	<h2>Quiz: crazy questions</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layoutR.php'>Home</a></span>
-		<span><a href='layoutR.php'>Quizzes</a></span>
-		<span><a href='credits.html'>Credits</a></span>
+		<span><a href='layoutR.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Quizzes</a></span>
+		<span><a href='credits.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Credits</a></span>
 		<span><a href='addQuestion.php?ePosta=<?php
-$postaElektronikoa=$_GET["ePosta"];
-echo $postaElektronikoa;
-?>'>Add Question</a></span>
-		<span><a href='showQuestionswithImage.php?ePosta=<?php
-$postaElektronikoa=$_GET["ePosta"];
-echo $postaElektronikoa;
-?>'>Show Question With Image</a></span>
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Add Question</a></span>
+		<span><a href='showQuestionsWithImage.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Show Question With Image</a></span>
+		<span><a href='showXMLQuestions.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Show Questions with XML</a></span>
 		<span><a href='logOut.php' onclick="return myFunction()" >Log Out</a></span>
 	</nav>
     <section class="main" id="s1">
@@ -80,12 +89,10 @@ echo $postaElektronikoa;
 	$result = $connection->	query($sql);
 	
 	if ($result->num_rows > 0) {
-		$row = $result->fetch_assoc();
-		echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['IrudiProfil'] ).'" width="200" height="150"/> ';
-	} else {
-		echo "<br>";
 		echo "Posta: ". $postaElektronikoa;
-		
+		echo "<br>";
+		$row = $result->fetch_assoc();
+		echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['IrudiProfil'] ).'" width="200" height="150"/> ';	
 	}
 	$connection->close();
 

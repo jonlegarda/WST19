@@ -114,7 +114,7 @@ $postaElektronikoa=$_GET["ePosta"];
 	</script>
 <titulua>Galdera sortu:</titulua>
 <p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
-<form  id="galderenF" name="galderenF"  action="addQuestionwithImage.php?ePosta=<?php $postaElektronikoa=$_GET["ePosta"];
+<form  id="galderenF" name="galderenF"  action="addQuestionWithImage.php?ePosta=<?php $postaElektronikoa=$_GET["ePosta"];
 echo $postaElektronikoa;?>" method="post"  enctype="multipart/form-data" target="_blank">
     <label for="posta">Posta elektronikoa(*): </label>
     <input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $postaElektronikoa;?>'/>

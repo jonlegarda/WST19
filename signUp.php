@@ -23,7 +23,7 @@
 						$image = $_FILES['irudiProfil']['tmp_name'];
 						$imgContent = addslashes(file_get_contents($image));
 			} else {
-						$imgContent=addslashes(file_get_contents('foto.bin'));
+						$imgContent=addslashes(file_get_contents('erabiltzailea.bin'));
 			}
 
 			$trimPostaElektronikoa = trim($postaElektronikoa);

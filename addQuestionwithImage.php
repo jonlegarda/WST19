@@ -8,11 +8,10 @@ include 'configEzarri.php';
 	if ($db->connect_error) {
 		die("Connection failed: " . $db->connect_error);
 	}
-	if(isset($_POST)){
+	if (isset($_POST)){
 		
 		$ePosta = $_GET["ePosta"];
-		
-		
+
 		$postaElektronikoa = $_POST['posta'];
 		$galdera = $_POST['galderaTestua'];
 		$erantzunZuzena = $_POST['erantzunZuzena'];	
@@ -22,6 +21,7 @@ include 'configEzarri.php';
 		$galderaZail = $_POST['galderaZail'];
 		$galderaArloa = $_POST['galderaArloa'];
 		$check = is_uploaded_file($_FILES["irudia"]["tmp_name"]);
+		
 		if($check !== false){
 			$image = $_FILES['irudia']['tmp_name'];
 			$imgContent = addslashes(file_get_contents($image));
@@ -29,7 +29,6 @@ include 'configEzarri.php';
 		else {
 			$imgContent=addslashes(file_get_contents('foto.bin'));
 		}
-		
 		
 		$trimPostaElektronikoa = trim($postaElektronikoa);
 		$trimGaldera = trim($galdera);
@@ -58,16 +57,45 @@ include 'configEzarri.php';
 			$sql = "INSERT INTO questionswithimage (PostaElektronikoa, Galdera, ErantzunZuzena, ErantzunOkerra1, ErantzunOkerra2, ErantzunOkerra3, GalderaZailtasuna, GalderaArloa, Irudia) 
 						VALUES ('$postaElektronikoa', '$galdera', '$erantzunZuzena', '$erantzunOkerra1', '$erantzunOkerra2', '$erantzunOkerra3', '$galderaZail', '$galderaArloa', '$imgContent')";
 			$insert = $db->query($sql);
+		
+			$xml = simplexml_load_file('questions.xml');
 			
 			if ($insert) {
+				
+				//$xml = simplexml_load_file('questions.xml');
+				
+				$assesmentItemXML = $xml->addChild('assessmentItem');
+				
+				$assesmentItemXML->addAttribute('complexity', $galderaZail);
+				$assesmentItemXML->addAttribute('subject', $galderaArloa);
+				
+				$itemBodyXML = $assesmentItemXML->addChild('itemBody');
+				$itemBody_p_XML = $itemBodyXML->addChild('p', $galdera);
+				
+				$correctResponseXML = $assesmentItemXML->addChild('correctResponse', $erantzunZuzena);
+				
+				$incorrectResponsesXML = $assesmentItemXML->addChild('incorrectResponses');
+				
+				$incorrectResponses_values_XML = $incorrectResponsesXML->addChild('value', $erantzunOkerra1);
+				$incorrectResponses_values_XML = $incorrectResponsesXML->addChild('value', $erantzunOkerra2);
+				$incorrectResponses_values_XML = $incorrectResponsesXML->addChild('value', $erantzunOkerra3);
+			
+				$xml->asXML('questions.xml');
+				
 				echo nl2br ("Galdera berria gordeta!\n");
-				echo nl2br ("<a href = showQuestionswithImage.php?ePosta=$ePosta >Ikusi dauden galdera guztiak.</a>\n");
+				echo nl2br ("<a href = showQuestionsWithImage.php?ePosta=$ePosta >Ikusi dauden galdera guztiak.</a>\n");
+				echo nl2br ("\n\n");
+				echo nl2br ("<a href = showXMLQuestions.php?ePosta=$ePosta > Ikusi dauden galdera guztiak XML fitxategian. </a>\n");
+				//echo nl2br ("<a href = transformazioa2.php?ePosta=$ePosta > Ikusi dauden galdera guztiak XML fitxategi TRANSFORMATUan. </a>\n");
+				echo nl2br ("\n\n");
 				echo nl2br ("<a href = addQuestion.php?ePosta=$ePosta >Txertatu beste galdera bat.</a>\n");
 				echo nl2br ("<a href = layoutR.php?ePosta=$ePosta >Menu nagusira joan.</a>\n");
+				
 			} else {
 				echo "Error: " . $sql . "<br>" . $db->error;
+				echo nl2br ("\n");
+				echo ("Errorea: galderak.xml-en ezin izan da galdera txertatu.\n");
 				echo ("<a href = addQuestion.html >Errorea egon da. Saiatu berriro galdera sartzen. Klikatu hemen.</a>");
-				
 			} 
 		} else {
 			echo nl2br ("Errorea! Sartutako zelai guztiak ez dira egoki bete.\n");
@@ -79,31 +107,4 @@ include 'configEzarri.php';
 	}
 
 
-/*$postaElektronikoa = $_POST['posta'];
-$erantzunZuzena = $_POST['erantzunZuzena'];
-$galdera = $_POST['galderaTestua'];
-$erantzunOkerra1 = $_POST['erantzunOkerra1'];
-$erantzunOkerra2 = $_POST['erantzunOkerra2'];
-$erantzunOkerra3 = $_POST['erantzunOkerra3'];
-$galderaZail = $_POST['galderaZail'];
-$galderaArloa = $_POST['galderaArloa'];
-$imgData =addslashes (file_get_contents($_FILES['irudia']));
-
-$sql = "INSERT INTO questionswithimage (PostaElektronikoa, Galdera, ErantzunZuzena, ErantzunOkerra1, ErantzunOkerra2, ErantzunOkerra3, GalderaZailtasuna, GalderaArloa, Irudia) 
-VALUES ('$postaElektronikoa', '$galdera', '$erantzunZuzena', '$erantzunOkerra1', '$erantzunOkerra2', '$erantzunOkerra3', '$galderaZail', '$galderaArloa', '{$imgData}')";
-
-if ($connection->query($sql) === TRUE) {
-    echo nl2br ("Galdera berria gordeta!\n");
-	echo nl2br ("<a href = showQuestions.php >Ikusi dauden galdera guztiak.</a>\n");
-	echo nl2br ("<a href = addQuestion.html >Txertatu beste galdera bat.</a>\n");
-	
-} else {
-    echo "Error: " . $sql . "<br>" . $connection->error;
-	echo "<a href = addQuestion.html >Errorea egon da. Saiatu berriro galdera sartzen. Klikatu hemen.</a>";
-	
-}
-
-$connection->close();*/
-/*https://www.codexworld.com/store-retrieve-image-from-database-mysql-php/*/
- 
 ?> 

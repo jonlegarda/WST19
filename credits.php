@@ -16,15 +16,30 @@
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
-      <span class="right"><a href="/login">LogIn</a> </span><br>
       <span class="right" style="display:none;"><a href="/logout">LogOut</a> </span>
 	<h2>CREDITS</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.html'>Home</a></span>
-		<span><a href='layout.html'>Quizzes</a></span>
-		<span><a href='logIn.php'>Log In</a></span>
-		<span><a href='signUp.php'>Sign Up</a></span>
+		<span><a href='layoutR.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+											?>'>Home</a></span>
+		<span><a href='layoutR.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+											?>'>Quizzes</a></span>
+		<span><a href='addQuestion.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+											?>'>Add Question</a></span>
+		<span><a href='showQuestionsWithImage.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Show Question With Image</a></span>
+													<span><a href='showXMLQuestions.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Show Questions with XML</a></span>
 	</nav>
     <section class="main" id="s1">
     
@@ -37,7 +52,10 @@
     Faculty of Computering in Donostia-San Sebastian (Gipuzkoa).<br>
     UPV-EHU: University of the Basque Country.<br>
     <br>
-    <a href="layout.html">
+    <a href="layoutR.php?ePosta=<?php
+						$postaElektronikoa=$_GET["ePosta"];
+						echo $postaElektronikoa;
+						?>">
 <img src="https://images.roadtrafficsigns.com/img/lg/K/go-back-arrow-sign-k-0138-r.png" align="middle" alt="" width="42" height="42" border="0"><br>
 </a>
 	</div>

@@ -31,33 +31,16 @@
 			$trimNick = trim($nick);
 			$trimPasahitza = trim($pasahitza);
 			
-			/*preg_match('/^[a-zA-Z]{2,20}[0-9]{3}@ikasle\.ehu\.((eus)|(es))$/', $trimPostaElektronikoa, $matchesEmail);
-			preg_match('/^([A-Z]([a-z]+)\s[A-Z]([a-z]+)\s?)+/', $trimDeitura, $matchesDeitura);
-			preg_match('/^\S+/', $trimNick, $matchesNick);
-			preg_match('/^\S{6,500}/', $trimPasahitza, $matchesPasahitza);*/
-			
 			$sql = "INSERT INTO users (PostaElektronikoa, Deitura, Nick, Pasahitza, IrudiProfil) 
 					VALUES ('$trimPostaElektronikoa', '$trimDeitura', '$trimNick','$trimPasahitza','$imgContent')";
-			
-			/*if ($matchesEmail && $matchesDeitura && $matchesNick && $matchesPasahitza){
-				*/
-					//header ('Location: layoutR.php?ePosta='.$postaElektronikoa.'');
-				$insert = $connection->query($sql);
-				if ($insert) {
-					phpAlert ("Erabiltzaile berria sortu da!");
-					/*echo  "<script type='text/javascript'>";
-					echo "window.close();";
-					echo "</script>";*/
-				    //header ('Location: layoutR.php?ePosta='.$postaElektronikoa.'');
-				    print "<meta http-equiv=Refresh content=\"0 ; url=layoutR.php?ePosta=$postaElektronikoa\">"; 
-				} else {
-					phpAlert( "Posta elektroniko hori iada erabilita dago! Saiatu beste posta kontu batekin.");
-					//header ('Location: signUp.php');
-					/*echo  "<script type='text/javascript'>";
-					echo "window.close();";
-					echo "</script>";*/
-					
-				} 
+
+			$insert = $connection->query($sql);
+			if ($insert) {
+				phpAlert ("Erabiltzaile berria sortu da!");
+				print "<meta http-equiv=Refresh content=\"0 ; url=layoutR.php?ePosta=$postaElektronikoa\">"; 
+			} else {
+				phpAlert( "Posta elektroniko hori iada erabilita dago! Saiatu beste posta kontu batekin.");
+			} 
 				
 			
 	$connection->close();
@@ -189,8 +172,6 @@
                 return false;
             }
         }
-
-      
     })
 
 	</script>

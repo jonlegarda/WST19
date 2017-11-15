@@ -117,7 +117,7 @@ $postaElektronikoa=$_GET["ePosta"];
 <form  id="galderenF" name="galderenF"  action="addQuestionWithImage.php?ePosta=<?php $postaElektronikoa=$_GET["ePosta"];
 echo $postaElektronikoa;?>" method="post"  enctype="multipart/form-data" target="_blank">
     <label for="posta">Posta elektronikoa(*): </label>
-    <input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $postaElektronikoa;?>'/>
+    <input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $postaElektronikoa;?>' disabled />
     <br/><br/>
     <label for="galderaTestua">Galderaren testua(*): </label>
     <input type="text" name="galderaTestua"  class="erantzuna" id="galderaTestua" height="2000px"/>

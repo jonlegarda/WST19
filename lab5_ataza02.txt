@@ -1,0 +1,71 @@
+Web Sistemak - Manex Lizaso & Jon Legarda
+
+LAB 5 - ATAZA 02.
+
+Ataza hau egiteko hainbat gauza egin ditugu. Horretarako, pausoz pauso azalduko dugu.
+
+OHARRA! Gerta daiteke ataza burutzeko beste aldaketa txiki batzuk egin izana.
+
+
+1.- var xhro4 = new XMLHttpRequest(); idatzi html script-an. Horrela hasieratuko dugu eta AJAX erabil dezakegu.
+
+
+2.- 	xhro4.onreadystatechange = function(){
+			if ((xhro4.readyState==4)&&(xhro4.status==200)){
+				var emaitza4 = xhro4.responseText;
+				document.getElementById("konektatuenKopurua").innerHTML = "Unean konektatutako erabiltzaile kopurua: " + emaitza4;
+			}
+		}	
+		
+		hau eginez, erantzuna jasotzerakoan "galderak" div-ean idatziko da.
+		
+		
+3.-  function onlineKopurua(kont) {
+		xhro4.open("GET", "online.php?kont="+kont, true);
+		xhro4.send();
+	}	
+	
+	...idatzita onlineKopurua funtzioa definitzen dugu, non kont pasatuko zaion. XMLHttpRequest eskaera objetuatik GET bat eginez,
+		jasoko dugu online.php fitxategitik. Gainera, ?kont=kont pasatuko zaio eta horrela kont horren arabera gauza bat edo beste egingo dugu.
+	Ondoren, bidaltzen da eskaera.
+		
+		
+4.- <?php
+		$xml = simplexml_load_file('counter.xml');
+		
+		if ($_GET['kont'] == 1) {
+			$xml->p = $xml->p +1;
+		} else if ($_GET['kont'] == 2) {
+			$xml->p = $xml->p -1;
+		}	
+		$xml->asXML('counter.xml');
+		echo $xml->p;
+		echo "<br>"
+	?>
+	
+	... idatziko dugu. Horrela jasoko dugu lehenago kont paraetroa pasatu duguna. Pasatzeko hura 1 edo 2 izango da beti. 
+	1 baldin bada, gehitu egingo da counter.xml-n balioa gora. 2 baldin bada, kendu egingo da counter.xml-n balioa behera.
+	Horren ostean, idatzi egingo da eskaerak jasoko du eta lehen zehaztutako lekuan idatziko dugu.
+	
+	
+5.- Gainera oso garrantzitsua da honakoa egitea handlingQuizes.php-ko body-an.:
+	
+	window.onload = function() {
+		galderaKop();
+		onlineKopurua(1);
+		setInterval(onlineKopurua, 2000);
+		setInterval(galderaKop, 20000);
+	}
+	window.onbeforeunload  = function() {
+		onlineKopurua(2);
+	}
+	window.onhaschange = function() {
+		onlineKopurua(2);
+	}
+	window.onpagehide = function() {
+		onlineKopurua(2);
+	}
+	
+	Modu horretan, beti ere orria itxiz edo atzera emanez edo aldatuz counter.xml-aren kontrol ondo eramango da.
+	
+	

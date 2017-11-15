@@ -1,0 +1,8 @@
+Lehenik windows.onLoad ekintza erabiliz funtzio bat definitzen dugun, non galderaKop metodoari deitzen diogun.
+galderaKop() metodoak lehurretik lortu den posta helbidea erabiliz. Dei hau AJAX bidez egiten da. 
+JArraian galderaKopurua.php orrian datu basearekin konektatzen gara. Jarraian bi query sortzen ditugu
+bat dauden galdera guztiak eskuratuz eta bestea uneko erabiltzailearenak direnekin. Azken honetarako eposta helbidea
+galderen PostaElektroniko eremuarekin konparatzen dugu. Behin bi query exekutatzen ditugula, lortutako emaitzekin num_rows()
+erabiliko dugu zenbat tupla dituen ikusteko eta bi emaitzak konkatenatuta eta echo erabiliz
+HAndligQuizzes.php orriari emaitza pasatzen zaio. Gainera setinterval(galderaKop, 20000) zehazten da, 20000 milisegunduro
+galderaKOp exekutatu dadin eta beraz, eguneraketak automatikoki egiteko.

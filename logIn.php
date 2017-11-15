@@ -25,10 +25,6 @@ if (isset($_POST['posta'])) {
 			header ('Location: layoutR.php?ePosta='.$postaElektronikoa.'');
 		} else 	{
 			echo "<script> alert('Pasahitza ez da zuzena. Proba ezazu berriro.') </script>";
-			//header ('Location: logIn.php');
-			/*echo  "<script type='text/javascript'>";
-			echo "window.close();";
-			echo "</script>";*/
 		}
 	}
 	

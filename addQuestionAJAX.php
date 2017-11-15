@@ -1,4 +1,5 @@
 <?php 
+//session_start();
 include 'configEzarri.php';
 
 // Konexioa sortu
@@ -9,9 +10,9 @@ include 'configEzarri.php';
 	}
 	if (isset($_POST)){
 		
-		$ePosta = $_GET["ePosta"];
 
-		$postaElektronikoa = $_POST['posta'];
+
+		$postaElektronikoa = $_POST['ePosta'];
 		$galdera = $_POST['galderaTestua'];
 		$erantzunZuzena = $_POST['erantzunZuzena'];	
 		$erantzunOkerra1 = $_POST['erantzunOkerra1'];
@@ -19,14 +20,9 @@ include 'configEzarri.php';
 		$erantzunOkerra3 = $_POST['erantzunOkerra3'];
 		$galderaZail = $_POST['galderaZail'];
 		$galderaArloa = $_POST['galderaArloa'];
-		$check = is_uploaded_file($_FILES["irudia"]["tmp_name"]);
 		
-		if ($check !== false){
-			$image = $_FILES['irudia']['tmp_name'];
-			$imgContent = addslashes(file_get_contents($image));
-		} else {
 			$imgContent=addslashes(file_get_contents('foto.bin'));
-		}
+	
 		
 		$trimPostaElektronikoa = trim($postaElektronikoa);
 		$trimGaldera = trim($galdera);
@@ -49,7 +45,7 @@ include 'configEzarri.php';
 		if ($matchesEmail && $matchesGaldera && $matchesErantzunZuzena && $matchesErantzunOkerra1 &&
 				$matchesErantzunOkerra2 && $matchesErantzunOkerra3 && $matchesGalderaZail && $matchesGalderaArloa && strlen($trimGaldera)>9) {
 				
-			$dataTime = date("Y-m-d H:i:s");
+
 				
 				//Insert image content into database
 			$sql = "INSERT INTO questionswithimage (PostaElektronikoa, Galdera, ErantzunZuzena, ErantzunOkerra1, ErantzunOkerra2, ErantzunOkerra3, GalderaZailtasuna, GalderaArloa, Irudia) 
@@ -78,28 +74,32 @@ include 'configEzarri.php';
 			
 				$xml->asXML('questions.xml');
 				
-				echo nl2br ("Galdera berria gordeta!\n");
-				echo nl2br ("<a href = showQuestionsWithImage.php?ePosta=$ePosta >Ikusi dauden galdera guztiak.</a>\n");
+				echo "OK. Txertaketa DBan eta XMLan ondo burutu dira.";
+				/*echo nl2br ("Galdera berria gordeta!\n");
+				echo nl2br ("<a href = showQuestionsWithImage.php?ePosta=$postaElektronikoa >Ikusi dauden galdera guztiak.</a>\n");
 				echo nl2br ("\n\n");
-				echo nl2br ("<a href = showXMLQuestions.php?ePosta=$ePosta > Ikusi dauden galdera guztiak XML fitxategian. </a>\n");
+				echo nl2br ("<a href = showXMLQuestions.php?ePosta=$postaElektronikoa > Ikusi dauden galdera guztiak XML fitxategian. </a>\n");
 				echo nl2br ("\n\n");
-				echo nl2br ("<a href = addQuestion.php?ePosta=$ePosta >Txertatu beste galdera bat.</a>\n");
-				echo nl2br ("<a href = layoutR.php?ePosta=$ePosta >Menu nagusira joan.</a>\n");
+				echo nl2br ("<a href = showQuestionsAJAX.php?ePosta=$postaElektronikoa > Ikusi dauden galdera guztiak AJAX bidez. </a>\n");
+				echo nl2br ("\n\n");
+				echo nl2br ("<a href = handlingQuizes.php?ePosta=$postaElektronikoa >Txertatu beste galdera bat.</a>\n");
+				echo nl2br ("<a href = layoutR.php?ePosta=$postaElektronikoa >Menu nagusira joan.</a>\n");*/
 				
 			} else {
-				echo "Error: " . $sql . "<br>" . $db->error;
+				echo "ERROREA. Txertaketa gaizki burutu da.";
+				/*echo "Error: " . $sql . "<br>" . $db->error;
 				echo nl2br ("\n");
 				echo ("Errorea: galderak.xml-en ezin izan da galdera txertatu.\n");
-				echo ("<a href = addQuestion.html >Errorea egon da. Saiatu berriro galdera sartzen. Klikatu hemen.</a>");
+				echo ("<a href = handlingQuizes.php?ePosta=$postaElektronikoa >Errorea egon da. Saiatu berriro galdera sartzen. Klikatu hemen.</a>");*/
 			} 
 		} else {
-			echo nl2br ("Errorea! Sartutako zelai guztiak ez dira egoki bete.\n");
+			/*echo nl2br ("Errorea! Sartutako zelai guztiak ez dira egoki bete.\n");
 			echo nl2br ("Zerbitzaria konturatu da akats horretaz. Kontuz, aldatu beharko duzu!\n");
-			echo nl2br ("<a href = addQuestion.html >Saiatu berriro galdera ezartzen.</a>\n");
+			echo nl2br ("<a href = handlingQuizes.php?ePosta=$postaElektronikoa >Saiatu berriro galdera ezartzen.</a>\n");*/
 		}
 	} else {
 		echo "isset no funciona.";
 	}
 
 
-?> 
+?>

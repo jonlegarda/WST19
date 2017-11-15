@@ -14,14 +14,12 @@
 		   href='stylesPWS/smartphone.css' />
 	<script>
 		function myFunction() {
-		var r=confirm("Ziur al zaude zure kontutik atera nahi duzula?");
-		if (r==false){
-			return false;
-		}
-		else{
-			return true;
-		}
-		
+			var r=confirm("Ziur al zaude zure kontutik atera nahi duzula?");
+			if (r==false){
+				return false;
+			} else {
+				return true;
+			}
 		}
 	</script>
   </head>
@@ -45,6 +43,10 @@
 							$postaElektronikoa=$_GET["ePosta"];
 							echo $postaElektronikoa;
 													?>'>Add Question</a></span>
+		<span><a href='handlingQuizes.php?ePosta=<?php
+							$postaElektronikoa=$_GET["ePosta"];
+							echo $postaElektronikoa;
+													?>'>Handling Quizes</a></span>
 		<span><a href='showQuestionsWithImage.php?ePosta=<?php
 							$postaElektronikoa=$_GET["ePosta"];
 							echo $postaElektronikoa;
@@ -62,6 +64,28 @@
 	<div>
 	Quizzes and credits will be displayed in this spot in future laboratories ...
 	</div>
+	<div>
+	<?php
+	$postaElektronikoa=$_GET["ePosta"];
+	echo "<br>";
+	include 'configEzarri.php';
+	// Konexioa sortu
+	$connection = new mysqli($servername, $username, $password, $dbname);
+	// Konexioa Egiaztatu (Ondo dagoen edo ez)
+	if ($connection->connect_error) {
+		die("Connection failed: " . $connection->connect_error);
+	}
+	$sql = "SELECT IrudiProfil FROM users WHERE PostaElektronikoa='$postaElektronikoa'";
+	$result = $connection->	query($sql);
+	if ($result->num_rows > 0) {
+		echo "Posta: ". $postaElektronikoa;
+		echo "<br>";
+		$row = $result->fetch_assoc();
+		echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['IrudiProfil'] ).'" width="200" height="150"/> ';	
+	}
+	$connection->close();
+?>
+	</div>
     </section>
 	<footer class='main' id='f1'>
 		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
@@ -71,29 +95,4 @@
 
 </body>
 </html>
-<?php
-	$postaElektronikoa=$_GET["ePosta"];
-	echo "<br>";
 
-	include 'configEzarri.php';
-
-	// Konexioa sortu
-	$connection = new mysqli($servername, $username, $password, $dbname);
-	// Konexioa Egiaztatu (Ondo dagoen edo ez)
-	if ($connection->connect_error) {
-		die("Connection failed: " . $connection->connect_error);
-	}
-	
-	$sql = "SELECT IrudiProfil FROM users WHERE PostaElektronikoa='$postaElektronikoa'";
-	
-	$result = $connection->	query($sql);
-	
-	if ($result->num_rows > 0) {
-		echo "Posta: ". $postaElektronikoa;
-		echo "<br>";
-		$row = $result->fetch_assoc();
-		echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['IrudiProfil'] ).'" width="200" height="150"/> ';	
-	}
-	$connection->close();
-
-?>

@@ -1,49 +1,55 @@
 <?php 
 
 	if (isset($_POST['pasahitza'])) {
-	include 'configEzarri.php';
-
-	// Konexioa sortu
-	$connection = new mysqli($servername, $username, $password, $dbname);
-	// Konexioa Egiaztatu (Ondo dagoen edo ez)
-	if ($connection->connect_error) {
-		die("Connection failed: " . $connection->connect_error);
-	}
-	function phpAlert($msg) {
-		echo '<script type="text/javascript">alert("' . $msg . '")</script>';
-	}
-	
-			$postaElektronikoa = $_POST['posta'];
-			$deitura = $_POST['deitura'];
-			$nick = $_POST['nick'];
-			$pasahitza = $_POST['pasahitza'];
-			$check = is_uploaded_file($_FILES["irudiProfil"]["tmp_name"]);
-
-			if ($check !== false){
-						$image = $_FILES['irudiProfil']['tmp_name'];
-						$imgContent = addslashes(file_get_contents($image));
-			} else {
-						$imgContent=addslashes(file_get_contents('erabiltzailea.bin'));
+		include 'configEzarri.php';
+		// Konexioa sortu
+		
+		
+		$balioztuta = true;
+		
+		if ($balioztuta) {
+			$connection = new mysqli($servername, $username, $password, $dbname);
+			// Konexioa Egiaztatu (Ondo dagoen edo ez)
+			if ($connection->connect_error) {
+				die("Connection failed: " . $connection->connect_error);
 			}
+			function phpAlert($msg) {
+				echo '<script type="text/javascript">alert("' . $msg . '")</script>';
+			}
+					$postaElektronikoa = $_POST['posta'];
+					$deitura = $_POST['deitura'];
+					$nick = $_POST['nick'];
+					$pasahitza = $_POST['pasahitza'];
+					$check = is_uploaded_file($_FILES["irudiProfil"]["tmp_name"]);
 
-			$trimPostaElektronikoa = trim($postaElektronikoa);
-			$trimDeitura = trim($deitura);
-			$trimNick = trim($nick);
-			$trimPasahitza = trim($pasahitza);
-			
-			$sql = "INSERT INTO users (PostaElektronikoa, Deitura, Nick, Pasahitza, IrudiProfil) 
-					VALUES ('$trimPostaElektronikoa', '$trimDeitura', '$trimNick','$trimPasahitza','$imgContent')";
+					if ($check !== false){
+								$image = $_FILES['irudiProfil']['tmp_name'];
+								$imgContent = addslashes(file_get_contents($image));
+					} else {
+								$imgContent=addslashes(file_get_contents('erabiltzailea.bin'));
+					}
 
-			$insert = $connection->query($sql);
-			if ($insert) {
-				phpAlert ("Erabiltzaile berria sortu da!");
-				print "<meta http-equiv=Refresh content=\"0 ; url=layoutR.php?ePosta=$postaElektronikoa\">"; 
-			} else {
-				phpAlert( "Posta elektroniko hori iada erabilita dago! Saiatu beste posta kontu batekin.");
-			} 
-				
-			
-	$connection->close();
+					$trimPostaElektronikoa = trim($postaElektronikoa);
+					$trimDeitura = trim($deitura);
+					$trimNick = trim($nick);
+					$trimPasahitza = trim($pasahitza);
+					
+					$sql = "INSERT INTO users (PostaElektronikoa, Deitura, Nick, Pasahitza, IrudiProfil) 
+							VALUES ('$trimPostaElektronikoa', '$trimDeitura', '$trimNick','$trimPasahitza','$imgContent')";
+
+					$insert = $connection->query($sql);
+					if ($insert) {
+						phpAlert ("Erabiltzaile berria sortu da!");
+						print "<meta http-equiv=Refresh content=\"0 ; url=layoutR.php?ePosta=$postaElektronikoa\">"; 
+					} else {
+						phpAlert( "Posta elektroniko hori iada erabilita dago! Saiatu beste posta kontu batekin.");
+					} 
+						
+					
+			$connection->close();
+		} else {
+			phpAlert("Barkatu, CrazyQuestions-en logeatzeko");
+		}
 	}
 
 	
@@ -97,8 +103,57 @@
 <body>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" language="javascript">
 
-<script>
+	xhroMatr = new XMLHttpRequest();
+	xhroPas = new XMLHttpRequest();
+	
+	xhroPas.onreadystatechange = function () {
+		if ((xhroPas.readyState==4)&&(xhroPas.status==200)) { 
+			var erantzuna = xhroPas.responseText;
+		
+			if (erantzuna == "baliozkoa") {
+				document.getElementById("pasahitzaErakutsi").style.color = "red";
+				document.getElementById("pasahitzaErakutsi").innerHTML = " Pasahitza ez da baliozkoa: segurtasun-maila urrikoa.";
+			} else if (erantzuna == "baliogabea") {
+				document.getElementById("pasahitzaErakutsi").style.color = "green";
+				document.getElementById("pasahitzaErakutsi").innerHTML = " Pasahitza zuzena eta segurua.";
+
+			} else {
+				document.getElementById("pasahitzaErakutsi").style.color = "red";
+				document.getElementById("pasahitzaErakutsi").innerHTML = xhroPas.responseText;
+			}
+		}
+	}
+	
+	function PasahitzaEgiaztatu() {
+		var pasahitza= $("#pasahitza").val();
+		xhroPas.open("GET", "pasahitzaWS.php?pasahitza="+pasahitza, true);
+		xhroPas.send();
+	}
+	xhroMatr.onreadystatechange = function () {
+		if ((xhroMatr.readyState==4)&&(xhroMatr.status==200 )) { 
+			var erantzuna = xhroMatr.responseText;
+			console.log(erantzuna);
+			if (erantzuna == "BAI") {
+				document.getElementById("matrikulatutaWSn").style.color = "green";
+				document.getElementById("matrikulatutaWSn").innerHTML = " Korreoa zuzena da (Web Sistema ikasgaian matrikulatuta zaude).";
+			} else if (erantzuna == "EZ") {
+				document.getElementById("matrikulatutaWSn").style.color = "red";
+				document.getElementById("matrikulatutaWSn").innerHTML = " Barkatu, baina korreo hori ez dago Web Sistemak ikasgaian matrikulatuta.";
+			} else {
+				document.getElementById("matrikulatutaWSn").style.color = "red";
+				document.getElementById("matrikulatutaWSn").innerHTML = " Errorea WS Zerbitzuarekin.";
+			}
+		}
+	}
+	
+	function matrikulatutaWS() {
+		var posta= $("#posta").val();
+		xhroMatr.open("GET", "matrikulatutaWS.php?ePosta="+posta, true);
+		xhroMatr.send();
+	}
+	
     function previewFile() {
         var preview = document.querySelector('img');
         var file = document.querySelector('input[type=file]').files[0];
@@ -113,11 +168,12 @@
         }
 		$("#irudiBistaratua").show();
     }
+	
 	function deleteIrudiBistaratua() {
 		$("#irudiBistaratua").hide();
 	}
+	
 	function egiaztatu(){
-		
 		if ($.denakBeteta()) {
 			var trimEmail= $("#posta").val().trim();
 			var trimDeitura= $("#deitura").val().trim();
@@ -179,7 +235,8 @@
 <p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
 <form  id="signUp" name="signUp"  action="" method="post" onsubmit="return egiaztatu(this)" enctype="multipart/form-data" >
     <label for="posta">Posta elektronikoa(*): </label>
-    <input type="text" name="posta" id="posta" class="erantzuna"/>
+    <input type="text" name="posta" id="posta" class="erantzuna" onChange="matrikulatutaWS()"/>
+	<div id="matrikulatutaWSn"></div>
     <br/><br/>
     <label for="deitura">Deitura (bi izen gutxienez eta lehen letra handia)(*): </label>
     <input type="text" name="deitura"  class="erantzuna" id="deitura" height="2000px"/>
@@ -188,10 +245,11 @@
     <input type="text" name="nick" class="erantzuna" id="nick" width="600px"/>
     <br/><br/>
     <label for="pasahitza">Pasahitza(*): </label>
-    <input type="password" name="pasahitza" class="erantzuna" id="pasahitza" width="600px"/>
+    <input type="password" name="pasahitza" class="erantzuna" id="pasahitza" width="600px" onChange="PasahitzaEgiaztatu()"/>
     <br/><br/>
     <label for="pasahitza2">Pasahitza errepikatu(*): </label>
     <input type="password" name="pasahitza2" class="erantzuna" id="pasahitza2" width="600px"/>
+	<div id="pasahitzaErakutsi"></div>
     <br/><br/>
 	<label for="irudiProfil">Irudia(hautazkoa): </label>
     <input type="file" name="irudiProfil" id="irudiProfil" onchange="previewFile()" >
@@ -202,6 +260,4 @@
 </form>
 <img src="" id="irudiBistaratua" width="200" style="display: none;">
 </body>
-</body>
 </html>
-

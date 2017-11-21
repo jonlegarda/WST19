@@ -1,0 +1,83 @@
+Azalpena: Lehenengo hautazkoa burutzeko lehenik botoi eta zelai bat sortu ditugu. AJAX erabiliko dugunez ez ditugu formulario batean sartu. "input=text" zelaian
+eskuratu nahi dugun galderaren id-a idatzi behar da. Jarraian "bilatu" botoian klikatuko dugu. Botoi honek bilatu funtzioari deituko dio. Funtzio honetan  SOAP bezeroa irekiko dugu
+eta id-a pasako diogu, ondoren honek SOAP Zerbitzariari pasa diezaion.
+
+Jarraian kontrola SOAP bezeroari(getQuestionWZ) pasako zaio. Orri honen helburua erabiltzailea eta zerbitzaria definituta dagoen SOAP zerbitzuaren artean bitarteko lanak egitea da.
+Hemendik SOAP zerbitzariari deituko zaio eta  bertan definitu dugun 'getQuestion' funtzioa baliatuz erabiltzaileak pasatako ID-a duen galdera bilatuko da zerbitzarian.
+Ez bada ezer aurkitzen, Ondorengo mezua pantailaratuko bidaliko da:"Ooops! Ez dago id horrekin galderarik erregistratuta."
+
+SOAP zerbitzariak , bezeroaren deia jasotzen duenean jasotako Id-a duen galdera bilatzen du datu basean. Honetarako, select query bat erabiltzen dugu. Behin emaitza eskuratzean
+array moduan eskuratuko dugunez eta guri barnean dauden datuak intersantzen zaizkigunez, emaitza hori string batera transformatuko dugu. Sortuko dugun string berri horretan
+tabla bat definituko dugu eta bertan array-ko datuak izango dira.
+
+Azkenik, String hori SOAP bezeroari pasako zaio eta ondoren layoutR orriari. jasotako orria bai taula bai ezer aurkitzen ez denean jasotzen den mezua, aurretik aipatu ditugun zelai-botoiaren azpian erakutsiko da.
+
+layoutR.php:
+
+xhroGalderaID = new XMLHttpRequest();
+		xhroGalderaID.onreadystatechange = function () {
+			if ((xhroGalderaID.readyState==4)&&(xhroGalderaID.status==200)) { 
+				var erantzuna = xhroGalderaID.responseText;
+				document.getElementById("idrekikoGaldera").style.color = "blue";
+				document.getElementById("idrekikoGaldera").align = "center";
+				document.getElementById("idrekikoGaldera").innerHTML = xhroGalderaID.responseText;
+			}
+		}
+		function bilatu() {			
+			var id = $("#idGald").val();
+			xhroGalderaID.open("GET", "getQuestionWZ.php?id="+id, true);
+			xhroGalderaID.send();
+		}
+<div>
+		<label for="id">Galderaren IDa sartu:</label>
+		<input type="text" name="idGald" id="idGald" class="erantzuna"/>
+		<br/><br/>
+		<label for="botoia">&nbsp</label>
+		<input id="botoia" type="submit" value="Bilatu" name="botoia" onclick="bilatu();">
+</div>
+
+getQuestion.php:
+
+require_once('lib/nusoap.php');
+require_once('lib/class.wsdlcache.php');
+
+$ns = "http://localhost/wsjl/getQuestion.php?wsdl";
+$server = new soap_server;
+
+$server->configureWSDL('getQuestion', $ns);
+$server->wsdl->schemaTargetNamespace = $ns;
+$server->register('getQuestion', array('x'=>'xsd:int'), array('y'=>'xsd:string'), $ns);
+
+function getQuestion($x){
+	include 'configEzarri.php';
+	$connection = new mysqli($servername, $username, $password, $dbname);
+	if ($connection->connect_error) {
+		die("Connection failed: " . $connection->connect_error);
+	}
+	$SQL_QUIZ = "SELECT * FROM questionswithimage WHERE ID=$x";
+	$emaitza = $connection->query($SQL_QUIZ);
+	if ($emaitza->num_rows > 0) {
+		while ($row = $emaitza->fetch_assoc()) {
+			$erantzuna = '<table style="width:60%"  border="1px solid blue"  border-collapse="collapse"><tr> <th> Galdera </th><th> Erantzuna </th><th> Zailtasuna </th></tr><tr><td> '.$row['Galdera'].' </td><td> '.$row['ErantzunZuzena'].' </td><td> '.$row['GalderaZailtasuna'].' </td></tr> </table>';
+			return $erantzuna;
+		}
+	} else {
+		$erantzuna = "Ooops! Ez dago id horrekin galderarik erregistratuta.";
+		return $erantzuna;
+	}
+	
+}
+if ( !isset( $HTTP_RAW_POST_DATA ) ) $HTTP_RAW_POST_DATA =file_get_contents( 'php://input' );
+$server->service($HTTP_RAW_POST_DATA);
+?>
+
+getQuestionWZ.php:
+
+<?php
+	require_once('lib/nusoap.php');
+	require_once('lib/class.wsdlcache.php');
+	$soapclient = new nusoap_client('http://localhost/wsjl/getQuestion.php?wsdl', true);
+	$galdeID = $_GET["id"];
+	$emaitza = $soapclient->call('getQuestion', array('x'=>$galdeID));
+	echo $emaitza;
+?>

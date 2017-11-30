@@ -1,3 +1,6 @@
+<?php
+	include "segurtasunaIkaslea.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +29,8 @@
             text-align: left;
         }
 		p {
-			width=300px; 
-			style =text-align: left;
+			width:300px; 
+			text-align: left;
 		}
         select {
             display: inline-block;
@@ -51,8 +54,7 @@
 	xhro1.onreadystatechange = function () {
 		if ((xhro1.readyState==4)&&(xhro1.status==200 )) { 
 			document.getElementById("txertaketaOndo").innerHTML = xhro1.responseText;
-			if(xhro1.responseText=="OK. Txertaketa DBan eta XMLan ondo burutu dira."){
-				alert("iritxi da");
+			if (xhro1.responseText=="OK. Txertaketa DBan eta XMLan ondo burutu dira."){
 				document.getElementById("galderenF").reset();
 			}
 		}
@@ -124,9 +126,9 @@
                 } else {
                     window.alert("Posta Elektonikoa okerra da.");
                 }
-            } else {
-                window.alert("Datu guztiak bete behar dira.");
-            }
+        } else {
+            window.alert("Datu guztiak bete behar dira.");
+		}
 	}
 	
 	function galderakJaso() {
@@ -138,10 +140,12 @@
 			$("#ikusi").val("Ikusi");
 			$("#galderak").empty();
 		}
-	}	
-	
+	}					
+
 	function galderaKop() {
-		var ePosta = "<?php echo "$_GET[ePosta]";?>";
+		var ePosta = "<?php
+		$postaElektronikoa=$_SESSION["korreoa"];
+		echo $postaElektronikoa;?>";
 		xhro3.open("GET", "galderaKopurua.php?ePosta="+ePosta, true);
 		xhro3.send();
 	}
@@ -177,7 +181,7 @@
 <form  id="galderenF" name="galderenF"  action="" method="post">
 
 	<label for="posta">Posta elektronikoa(*): </label>
-    <input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $_GET["ePosta"];?>' disabled />
+    <input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $_SESSION["korreoa"];?>' disabled />
     <br/><br/>
     <label for="galderaTestua">Galderaren testua(*): </label>
     <input type="text" name="galderaTestua"  class="erantzuna" id="galderaTestua" height="2000px"/>
@@ -200,10 +204,10 @@
     <label for="galderaArloa">Galderaren arloa(*): </label>
     <input type="text" name="galderaArloa" id="galderaArloa"/>
     <br/><br/>
-	<input type="button" id="txertatu" name="txertatu" value="Txertatu" onclick="galderaTxertatuXML()"/>
-	<input type="button" id="ikusi" name="ikusi" value="Ikusi" onclick="galderakJaso()"/>
+	<input type="button" id="txertatu" name="txertatu" value="Txertatu" onClick="galderaTxertatuXML()"/>
+	<input type="button" id="ikusi" name="ikusi" value="Ikusi" onClick="galderakJaso()"/>
 	<br/><br/>
-	<a href="layoutR.php?ePosta=<?php echo $_GET["ePosta"]?>">ATZERA</a>
+	<a href="layoutR.php">ATZERA</a>
 </form>
 <br/>
 <div id="nireGalderaKopurua">

@@ -1,5 +1,5 @@
 <?php
-$postaElektronikoa=$_GET["ePosta"];
+$postaElektronikoa=$_SESSION["korreoa"];
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,6 +1,6 @@
 <?php
 
-$local = 1;
+$local = 0;
 
 if ($local == 0) {
 	$servername = "localhost";

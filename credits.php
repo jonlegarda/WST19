@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,27 +23,30 @@
 	<h2>CREDITS</h2>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layoutR.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-											?>'>Home</a></span>
-		<span><a href='layoutR.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-											?>'>Quizzes</a></span>
-		<span><a href='addQuestion.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-											?>'>Add Question</a></span>
-		<span><a href='showQuestionsWithImage.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Show Question With Image</a></span>
-													<span><a href='showXMLQuestions.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Show Questions with XML</a></span>
-	</nav>
+	
+			<?php
+	if(isset($_SESSION["kautotuta"])){
+		if ($_SESSION["kautotuta"] == "irakaslea"){
+			echo '<span><a href="layoutR.php">Quizzes</a></span>';
+			echo '<span><a href="layoutR.php">Home</a></span>';
+			echo '<span><a href="reviewingQuizes.php">Review in Quizes</a></span>';
+			echo '<span><a href="logOut.php" onclick="return myFunction()" >Log Out</a></span>';
+		}
+		else if($_SESSION["kautotuta"] == "ikaslea"){
+			echo '<span><a href="layoutR.php">Quizzes</a></span>';
+				echo '<span><a href="layoutR.php">Home</a></span>';
+			echo '<span><a href="handlingQuizes.php">Handling Quizes</a></span>';
+			echo '<span><a href="logOut.php" onclick="return myFunction()" >Log Out</a></span>';
+		}
+	}
+	else{
+		echo '<span><a href="layoutR.php">Quizzes</a></span>';
+			echo '<span><a href="layoutR.php">Home</a></span>';
+		echo '<span><a href="logIn.php">LogIn</a></span>';
+		echo '<span><a href="signUp.php">SignUp</a></span>';
+	}
+		?>
+		</nav>
     <section class="main" id="s1">
     
 	
@@ -52,10 +58,7 @@
     Faculty of Computering in Donostia-San Sebastian (Gipuzkoa).<br>
     UPV-EHU: University of the Basque Country.<br>
     <br>
-    <a href="layoutR.php?ePosta=<?php
-						$postaElektronikoa=$_GET["ePosta"];
-						echo $postaElektronikoa;
-						?>">
+    <a href="layoutR.php">
 <img src="https://images.roadtrafficsigns.com/img/lg/K/go-back-arrow-sign-k-0138-r.png" align="middle" alt="" width="42" height="42" border="0"><br>
 </a>
 	</div>

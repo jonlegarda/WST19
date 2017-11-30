@@ -1,17 +1,15 @@
 <?php 
-include 'configEzarri.php';
+	include 'configEzarri.php';
 
-// Konexioa sortu
+	// Konexioa sortu
 	$db = new mysqli($servername, $username, $password, $dbname);
-// Konexioa Egiaztatu (Ondo dagoen edo ez)
+	// Konexioa Egiaztatu (Ondo dagoen edo ez)
 	if ($db->connect_error) {
 		die("Connection failed: " . $db->connect_error);
 	}
 	if (isset($_POST)){
 		
 		$ePosta = $_GET["ePosta"];
-
-		$postaElektronikoa = $_POST['posta'];
 		$galdera = $_POST['galderaTestua'];
 		$erantzunZuzena = $_POST['erantzunZuzena'];	
 		$erantzunOkerra1 = $_POST['erantzunOkerra1'];
@@ -28,7 +26,7 @@ include 'configEzarri.php';
 			$imgContent=addslashes(file_get_contents('foto.bin'));
 		}
 		
-		$trimPostaElektronikoa = trim($postaElektronikoa);
+		$trimPostaElektronikoa = trim($ePosta);
 		$trimGaldera = trim($galdera);
 		$trimErantzunZuzena = trim($erantzunZuzena);
 		$trimErantzunOkerra1 = trim($erantzunOkerra1);
@@ -53,7 +51,7 @@ include 'configEzarri.php';
 				
 				//Insert image content into database
 			$sql = "INSERT INTO questionswithimage (PostaElektronikoa, Galdera, ErantzunZuzena, ErantzunOkerra1, ErantzunOkerra2, ErantzunOkerra3, GalderaZailtasuna, GalderaArloa, Irudia) 
-						VALUES ('$postaElektronikoa', '$galdera', '$erantzunZuzena', '$erantzunOkerra1', '$erantzunOkerra2', '$erantzunOkerra3', '$galderaZail', '$galderaArloa', '$imgContent')";
+						VALUES ('$ePosta', '$galdera', '$erantzunZuzena', '$erantzunOkerra1', '$erantzunOkerra2', '$erantzunOkerra3', '$galderaZail', '$galderaArloa', '$imgContent')";
 			$insert = $db->query($sql);
 		
 			$xml = simplexml_load_file('questions.xml');

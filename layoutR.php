@@ -1,5 +1,12 @@
-﻿<!DOCTYPE html>
+<?php
+
+	session_start();
+?>
+
+<!DOCTYPE html>
 <html>
+
+	
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
 	<title>Quizzes</title>
@@ -28,9 +35,7 @@
 			var id = $("#idGald").val();
 			xhroGalderaID.open("GET", "getQuestionWZ.php?id="+id, true);
 			xhroGalderaID.send();
-		}
-
-		
+		}		
 		function myFunction() {
 			var r=confirm("Ziur al zaude zure kontutik atera nahi duzula?");
 			if (r==false){
@@ -49,54 +54,56 @@
 	<h2>Quiz: Crazy Questions</h2>
 	<div>
 		<?php
-			$postaElektronikoa=$_GET["ePosta"];
-			echo "<br>";
-			include 'configEzarri.php';
-			// Konexioa sortu
-			$connection = new mysqli($servername, $username, $password, $dbname);
-			// Konexioa Egiaztatu (Ondo dagoen edo ez)
-			if ($connection->connect_error) {
-				die("Connection failed: " . $connection->connect_error);
-			}
-			$sql = "SELECT IrudiProfil FROM users WHERE PostaElektronikoa='$postaElektronikoa'";
-			$result = $connection->	query($sql);
-			if ($result->num_rows > 0) {
-				echo "Posta: ". $postaElektronikoa;
+		include 'configEzarri.php';
+		if(isset($_SESSION["kautotuta"])){
+			if($_SESSION["kautotuta"] == "ikaslea"){
+				$postaElektronikoa=$_SESSION["korreoa"];
 				echo "<br>";
-				$row = $result->fetch_assoc();
-				echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['IrudiProfil'] ).'" width="100" height="75"/> ';	
+				
+				// Konexioa sortu
+				$connection = new mysqli($servername, $username, $password, $dbname);
+				// Konexioa Egiaztatu (Ondo dagoen edo ez)
+				if ($connection->connect_error) {
+					die("Connection failed: " . $connection->connect_error);
+				}
+				$sql = "SELECT IrudiProfil FROM users WHERE PostaElektronikoa='$postaElektronikoa'";
+				$result = $connection->	query($sql);
+				if ($result->num_rows > 0) {
+					echo "Posta: ". $postaElektronikoa;
+					echo "<br>";
+					$row = $result->fetch_assoc();
+					echo '<img src="data:image/jpeg;base64,'.base64_encode( $row['IrudiProfil'] ).'" width="100" height="75"/> ';	
+				}
+				$connection->close();
 			}
-			$connection->close();
+		}
 		?>
 	</br>
 	</div>
     </header>
 	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layoutR.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Quizzes</a></span>
-		<span><a href='credits.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Credits</a></span>
-		<span><a href='addQuestion.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Add Question</a></span>
-		<span><a href='handlingQuizes.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Handling Quizes</a></span>
-		<span><a href='showQuestionsWithImage.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Show Question With Image</a></span>
-		<span><a href='showXMLQuestions.php?ePosta=<?php
-							$postaElektronikoa=$_GET["ePosta"];
-							echo $postaElektronikoa;
-													?>'>Show Questions with XML</a></span>
-		<span><a href='logOut.php' onclick="return myFunction()" >Log Out</a></span>
+	<?php
+	if(isset($_SESSION["kautotuta"])){
+		if ($_SESSION["kautotuta"] == "irakaslea"){
+			echo '<span><a href="layoutR.php">Quizzes</a></span>';
+			echo '<span><a href="credits.php">Credits</a></span>';
+			echo '<span><a href="reviewingQuizes.php">Review in Quizes</a></span>';
+			echo '<span><a href="logOut.php" onclick="return myFunction()" >Log Out</a></span>';
+		}
+		else if($_SESSION["kautotuta"] == "ikaslea"){
+			echo '<span><a href="layoutR.php">Quizzes</a></span>';
+			echo '<span><a href="credits.php">Credits</a></span>';
+			echo '<span><a href="handlingQuizes.php">Handling Quizes</a></span>';
+			echo '<span><a href="logOut.php" onclick="return myFunction()" >Log Out</a></span>';
+		}
+	}
+	else{
+		echo '<span><a href="layoutR.php">Quizzes</a></span>';
+		echo '<span><a href="credits.php">Credits</a></span>';
+		echo '<span><a href="logIn.php">Login</a></span>';
+		echo '<span><a href="signUp.php">SignUp</a></span>';
+	}
+		?>
 	</nav>
     <section class="main" id="s1">
     
@@ -105,11 +112,17 @@
 		
 	</div> 
 	<div>
-			<label for="id">Galderaren IDa sartu:</label>
-			<input type="text" name="idGald" id="idGald" class="erantzuna"/>
-			<br/><br/>
-			<label for="botoia">&nbsp</label>
-			<input id="botoia" type="submit" value="Bilatu" name="botoia" onclick="bilatu();">
+		<?php
+	if(isset($_SESSION["kautotuta"])){
+	echo '<div>';
+			echo '<label for="id">Galderaren IDa sartu:</label>';
+			echo '<input type="text" name="idGald" id="idGald" class="erantzuna"/>';
+			echo '<br/><br/>';
+			echo '<label for="botoia">&nbsp</label>';
+			echo '<input id="botoia" type="submit" value="Bilatu" name="botoia" onclick="bilatu();">';
+	echo '</div>';
+	}
+	?>
 	</div>
 	<div id="idrekikoGaldera">
 	</div>
@@ -119,7 +132,6 @@
 		<a href='https://github.com'>Link GITHUB</a>
 	</footer>
 </div>
-
 </body>
 </html>
 

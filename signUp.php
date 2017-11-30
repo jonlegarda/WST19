@@ -3,8 +3,7 @@
 	if (isset($_POST['pasahitza'])) {
 		include 'configEzarri.php';
 		// Konexioa sortu
-		
-		
+
 		$balioztuta = true;
 		
 		if ($balioztuta) {
@@ -16,38 +15,61 @@
 			function phpAlert($msg) {
 				echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 			}
-					$postaElektronikoa = $_POST['posta'];
-					$deitura = $_POST['deitura'];
-					$nick = $_POST['nick'];
-					$pasahitza = $_POST['pasahitza'];
-					$check = is_uploaded_file($_FILES["irudiProfil"]["tmp_name"]);
-
+				$postaElektronikoa = $_POST['posta'];
+				$deitura = $_POST['deitura'];
+				$nick = $_POST['nick'];
+				$pasahitza = $_POST['pasahitza'];
+				$pasahitza2 = $_POST['pasahitza2'];
+				$check = is_uploaded_file($_FILES["irudiProfil"]["tmp_name"]);
+				$trimPostaElektronikoa= trim($postaElektronikoa);
+				$trimDeitura= trim($deitura);
+				$trimNick= trim($nick);
+				$trimPasahitza= trim($pasahitza);
+				$trimPasahitza2= trim($pasahitza2);
+				if(!preg_match("/^[a-zA-Z]{2,20}[0-9]{3}@ikasle\.ehu\.((eus)|(es))$/", $trimPostaElektronikoa)){
+					echo "<script> alert('pasahitzaren formatua ez da egokia.') </script>";
+				}
+				else if(!preg_match("/^([A-Z]([a-z]+)\s[A-Z]([a-z]+)\s?)+/", $trimDeitura)){
+					echo "<script> alert('deitura ez da egokia.') </script>";
+				}
+				else if(!preg_match("/^([^\s]{1,})$/", $trimNick)){
+					echo "<script> alert('goitizenak hitz bakarra izan behar du.') </script>";
+				}
+				else if(!preg_match("/^([^\s]{1,})$/", $trimPasahitza)){
+					echo "<script> alert('pasahitzak ezin du hutsunerik izan.') </script>";
+				}
+				else if(!preg_match("/^([^\s]{6,})$/", $trimPasahitza)){
+					echo "<script> alert('pasahitzak gutxienez 6 karaktere izan behar ditu.') </script>";
+				}
+				else if($trimPasahitza2 != $trimPasahitza){
+					echo "<script> alert('pasahitzak bersdinak izan behar dira.') </script>";
+				}else{
 					if ($check !== false){
 								$image = $_FILES['irudiProfil']['tmp_name'];
 								$imgContent = addslashes(file_get_contents($image));
 					} else {
-								$imgContent=addslashes(file_get_contents('erabiltzailea.bin'));
+								$imgContent = addslashes(file_get_contents('erabiltzailea.bin'));
 					}
 
 					$trimPostaElektronikoa = trim($postaElektronikoa);
 					$trimDeitura = trim($deitura);
 					$trimNick = trim($nick);
-					$trimPasahitza = trim($pasahitza);
-					
+					$trimPasahitza = trim($pasahitza);		
+					$enkripPasahitza = crypt($trimPasahitza, "wsLizasoLegardaEnkriptazioPasahitza");
 					$sql = "INSERT INTO users (PostaElektronikoa, Deitura, Nick, Pasahitza, IrudiProfil) 
-							VALUES ('$trimPostaElektronikoa', '$trimDeitura', '$trimNick','$trimPasahitza','$imgContent')";
-
+							VALUES ('$trimPostaElektronikoa', '$trimDeitura', '$trimNick','$enkripPasahitza','$imgContent')";
 					$insert = $connection->query($sql);
 					if ($insert) {
 						phpAlert ("Erabiltzaile berria sortu da!");
-						print "<meta http-equiv=Refresh content=\"0 ; url=layoutR.php?ePosta=$postaElektronikoa\">"; 
+						print "<meta http-equiv=Refresh content=\"0 ; url=layoutR.php\">"; 
 					} else {
-						phpAlert( "Posta elektroniko hori iada erabilita dago! Saiatu beste posta kontu batekin.");
-					} 
-						
-					
-			$connection->close();
-		} else {
+						phpAlert( "Posta elektroniko hori jadanik erabilita dago! Saiatu beste posta kontu batekin.");
+					}
+				}
+			
+		$connection->close();
+			
+		}else {
 			phpAlert("Barkatu, CrazyQuestions-en logeatzeko");
 		}
 	}

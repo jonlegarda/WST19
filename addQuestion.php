@@ -5,8 +5,8 @@ $postaElektronikoa=$_SESSION["korreoa"];
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Add question </title>
-
+    <title>Galdera Gehitu </title>
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
             background-color: cadetblue;

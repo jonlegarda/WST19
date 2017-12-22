@@ -1,6 +1,6 @@
 <?php
 	function phpAlert($msg) {
-				echo '<script type="text/javascript">alert("' . $msg . '")</script>';
+		echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 	}
 	
 	if (isset($_POST['pasahitza1'])) {
@@ -31,7 +31,7 @@
 <head>
     <meta charset="utf-8">
     <title>Pasahitza aldatu</title>
-
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
             background-color: cadetblue;

@@ -3,7 +3,7 @@
 require_once('lib/nusoap.php');
 require_once('lib/class.wsdlcache.php');
 
-$ns = "http://localhost/wsjl/getQuestion.php?wsdl";
+$ns = "localhost/wsjl/getQuestion.php?wsdl";
 $server = new soap_server;
 
 $server->configureWSDL('getQuestion', $ns);

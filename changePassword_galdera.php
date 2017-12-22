@@ -33,17 +33,10 @@ session_start();
 <head>
     <meta charset="utf-8">
     <title>Pasahitza aldatu</title>
-
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        body {
-            background-color: cadetblue;
-        }
-        titulua{
-            font-style: italic;
-            font-size: 40px;
-            color: navy;
-        }
-        label {
+       
+       /* label {
             display: inline-block;
             float: left;
             clear: left;
@@ -66,7 +59,7 @@ session_start();
         }
         .erantzuna{
             width: 350px;
-        }
+        }*/
 		
     </style>
 </head>
@@ -74,7 +67,11 @@ session_start();
 
 <body>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
 <script>
 
@@ -120,21 +117,43 @@ session_start();
 	}
 
 </script>
-<titulua>Pasahitza aldatu</titulua>
-<p>Idatz ezazu bi aldiz pasahitza berria eta ondoren, "aldatu" botoian klik egin ezazu.</p>
-<form  id="changePassword" name="changePassword"  action="changePassword_galdera.php" method="post"  enctype="multipart/form-data"  >
-    <label for="ePosta">Zure Korreoa: </label>
-    <input type="text" name="ePosta" id="ePosta"  value="<?php  echo $_SESSION["k"];?>" disabled class="erantzuna"/>
-	<br/><br/>
-	<label for="pasahitza1">Pasahitza (*): </label>
-    <input type="password" name="pasahitza1" id="pasahitza1" class="erantzuna" onchange="PasahitzaEgiaztatu()"/>
-	<div id="pasahitzaErakutsi"></div>
-    <br/><br/>
-	<label for="pasahitza2">Pasahitza errepikatu (*): </label>
-    <input type="password" name="pasahitza2" id="pasahitza2" class="erantzuna"/>
-    <br/><br/>
-	<input id="botoia" type="submit" value="Aldatu" name="botoia" width="350px" onsubmit="egiaztatu()" > &nbsp
-</form>
-</body>
+<div class="container-fluid">
+	<div id='page-wrap'>
+		<header class='main' id='h1'>
+		<h1><a href="layoutR.php" class="btn-block">Quiz: Crazy Questions</a></h1>
+		</header>
+		<nav class='main' id='n1' role='navigation'>
+		<div class="row">
+			<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="layoutR.php">Home</a></div>
+			<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="quizzes.php">Quizzes</a></div>
+			<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="credits.php">Credits</a></div>
+			<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="logIn.php">Login</a></div>
+			<div class="col-sm-2 col-sm-push-1" ><a class="btn-block" href="signUp.php">SignUp</a></div>
+			</div>
+		</nav>
+		<section class="main" id="s1">
+			<h1>Pasahitza aldatu</h1>
+			<p>Idatz ezazu bi aldiz pasahitza berria eta ondoren, "aldatu" botoian klik egin ezazu.</p>
+			<form  id="changePassword" name="changePassword"  action="changePassword_galdera.php" method="post"  enctype="multipart/form-data"  >
+				<label for="ePosta">Zure Korreoa: </label>
+				<input type="text" name="ePosta" id="ePosta"  value="<?php  echo $_SESSION["k"];?>" disabled class="erantzuna"/>
+				<br/><br/>
+				<label for="pasahitza1">Pasahitza (*): </label>
+				<input type="password" name="pasahitza1" id="pasahitza1" class="erantzuna" onchange="PasahitzaEgiaztatu()"/>
+				<div id="pasahitzaErakutsi"></div>
+				<br/>
+				<label for="pasahitza2">Pasahitza errepikatu (*): </label>
+				<input type="password" name="pasahitza2" id="pasahitza2" class="erantzuna"/>
+				<br/><br/>
+				<input id="botoia" type="submit" value="Aldatu" name="botoia" width="350px" onsubmit="egiaztatu()" > &nbsp
+			</form>
+		</section>
+		<footer class='main' id='f1'>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/jonlegarda/WST19'>Link GITHUB</a>
+		</footer>
+		</div>
+		</div>
+
 </body>
 </html>

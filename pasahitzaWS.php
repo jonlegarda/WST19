@@ -3,7 +3,7 @@
 	require_once('lib/nusoap.php');
 	require_once('lib/class.wsdlcache.php');
 
-	$soapclient = new nusoap_client('http://localhost/wsjl/pasahitzaEgiaztatu.php?wsdl', true);
+	$soapclient = new nusoap_client('https://wsjonlegarda.000webhostapp.com/lab7/pasahitzaEgiaztatu.php?wsdl', true);
 	
 	$pasahitza = $_GET['pasahitza'];
 	

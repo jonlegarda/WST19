@@ -4,9 +4,7 @@ if (isset($_POST['posta'])) {
 	
 	include 'configEzarri.php';
 	
-	// Konexioa sortu
 	$connection = new mysqli($servername, $username, $password, $dbname);
-	// Konexioa Egiaztatu (Ondo dagoen edo ez)
 	if ($connection->connect_error) {
 		die("Connection failed: " . $connection->connect_error);
 	}
@@ -37,7 +35,7 @@ if (isset($_POST['posta'])) {
 					if($_SESSION["$postaElektronikoa"]>2){
 						echo "<script> alert('Jada saiakera gehiegi egin dituzu.') </script>";
 				}
-					else{
+					else {
 						$rows_cnt=0;
 				
 						if (preg_match("/^(.){1,}@ehu\.es/", trim($postaElektronikoa))) {
@@ -78,25 +76,19 @@ if (isset($_POST['posta'])) {
 							header ('Location: layoutR.php');
 						}
 			}
-			}
-			else{
-				if(isset($_SESSION["$postaElektronikoa"])){
-					if($_SESSION["$postaElektronikoa"]>2){
+			} else {
+				if (isset($_SESSION["$postaElektronikoa"])){
+					if ($_SESSION["$postaElektronikoa"]>2){
 						echo "<script> alert('Jada saiakera gehiegi egin dituzu.') </script>";
-				}
-					else{
+				} else {
 						$_SESSION["$postaElektronikoa"]= $_SESSION["$postaElektronikoa"] +1;
 						echo "<script> alert('Pasahitza ez da zuzena. Proba ezazu berriro.') </script>";					
 					}
-				}
-				else{
+				} else {
 					$_SESSION["$postaElektronikoa"]=1;
 					echo "<script> alert('Pasahitza ez da zuzena. Proba ezazu berriro.') </script>";
-				}
-				
-				
+				}	
 			}
-		
 	 }
 	}
 }
@@ -108,17 +100,10 @@ if (isset($_POST['posta'])) {
 <head>
     <meta charset="utf-8">
     <title>Log In</title>
-
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        body {
-            background-color: cadetblue;
-        }
-        titulua{
-            font-style: italic;
-            font-size: 40px;
-            color: navy;
-        }
-        label {
+        
+       /* label {
             display: inline-block;
             float: left;
             clear: left;
@@ -141,7 +126,7 @@ if (isset($_POST['posta'])) {
         }
         .erantzuna{
             width: 350px;
-        }
+        }*/
 		
     </style>
 </head>
@@ -149,7 +134,11 @@ if (isset($_POST['posta'])) {
 
 <body>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
 <script>
 
@@ -186,23 +175,45 @@ if (isset($_POST['posta'])) {
     })
 
 </script>
+<div class="container-fluid">
+	<div id='page-wrap'>
+		<header class='main' id='h1'>
+		<h1><a href="layoutR.php" class="btn-block">Quiz: Crazy Questions</a></h1>
+	</header>
+	<nav class='main' id='n1' role='navigation'>
+	<div class="row">
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="layoutR.php">Home</a></div>
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="quizzes.php">Quizzes</a></div>
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="credits.php">Credits</a></div>
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="logIn.php">Log In</a></div>
+		<div class="col-sm-2 col-sm-push-1"><a class="btn-block" href="signUp.php"  >Sign Up</a></div>
+	</div>
+	</nav>
+	<section class="main" id="s1">
+	<h1>Log In</h1>
+	<br/>
+	<p>(*) Bi hutsuneak betetzea beharrezkoa da..</p>
+	<form  id="logIn" name="logIn"  action="logIn.php" method="post"  enctype="multipart/form-data"  >
+		<label for="posta">Posta elektronikoa (*): </label>
+		<input type="text" name="posta" id="posta" class="erantzuna"/>
+		<br/><br/>
+		<label for="deitura">Pasahitza (*): </label>
+		<input type="password" name="pasahitza"  class="erantzuna" id="pasahitza" height="2000px"/>
+		<br/><br/>
+		<input id="botoia" type="submit" value="Log In" name="botoia" width="350px" > &nbsp
+	</form>
+	<br/><br/>
+	<a href="forgetPassword_galdera.php">Pasahitza ahaztu duzu?</a>
+	<br/><br/>
+	<a href='signUp.php'>Ez daukazu konturik? Klikatu hemen.</a>
+	</section>
+	<footer class='main' id='f1'>
+				<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+				<a href='https://github.com/jonlegarda/WST19'>Link GITHUB</a>
+			</footer>
+</div>
+</div>
 
-<titulua>Log In</titulua>
-<p>(*) Bi hutsuneak betetzea beharrezkoa da..</p>
-<form  id="logIn" name="logIn"  action="logIn.php" method="post"  enctype="multipart/form-data"  >
-    <label for="posta">Posta elektronikoa (*): </label>
-    <input type="text" name="posta" id="posta" class="erantzuna"/>
-    <br/><br/>
-    <label for="deitura">Pasahitza (*): </label>
-    <input type="password" name="pasahitza"  class="erantzuna" id="pasahitza" height="2000px"/>
-    <br/><br/>
-	<input id="botoia" type="submit" value="Log In" name="botoia" width="350px" > &nbsp
-</form>
-<br/><br/>
-<a href="forgetPassword_galdera.php">Pasahitza ahaztu duzu?</a>
-<br/><br/>
-<a href='signUp.php'>Ez daukazu konturik? Klikatu hemen.</a>
-</body>
 </body>
 </html>
 

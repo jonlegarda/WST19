@@ -43,7 +43,7 @@
 <head>
     <meta charset="utf-8">
     <title>Pasahitza aldatu</title>
-
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
             background-color: cadetblue;
@@ -102,6 +102,10 @@
     <br/><br/>
 	<input id="botoia" type="submit" value="Aldatu Pasahitza" name="botoia" width="350px" > &nbsp
 </form>
+<footer class='main' id='f1'>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/jonlegarda/WST19'>Link GITHUB</a>
+		</footer>
 </body>
 </body>
 </html>

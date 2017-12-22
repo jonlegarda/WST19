@@ -83,10 +83,10 @@
 <head>
     <meta charset="utf-8">
     <title>Sign Up </title>
-
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        body {
-            background-color: cadetblue;
+      /*body {
+           background-color: cadetblue;
         }
         titulua{
             font-style: italic;
@@ -113,10 +113,7 @@
         select {
             display: inline-block;
             float: left;
-        }
-        .erantzuna{
-            width: 350px;
-        }
+        }*/
 		
     </style>
 </head>
@@ -124,7 +121,11 @@
 
 <body>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" language="javascript">
 
 	xhroMatr = new XMLHttpRequest();
@@ -133,7 +134,7 @@
 	xhroPas.onreadystatechange = function () {
 		if ((xhroPas.readyState==4)&&(xhroPas.status==200)) { 
 			var erantzuna = xhroPas.responseText;
-		
+		    console.log(erantzuna);
 			if (erantzuna == "baliozkoa") {
 				document.getElementById("pasahitzaErakutsi").style.color = "red";
 				document.getElementById("pasahitzaErakutsi").innerHTML = " Pasahitza ez da baliozkoa: segurtasun-maila urrikoa.";
@@ -253,33 +254,57 @@
     })
 
 	</script>
-<titulua>Sign Up</titulua>
-<p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
-<form  id="signUp" name="signUp"  action="" method="post" onsubmit="return egiaztatu(this)" enctype="multipart/form-data" >
-    <label for="posta">Posta elektronikoa(*): </label>
-    <input type="text" name="posta" id="posta" class="erantzuna" onChange="matrikulatutaWS()"/>
-	<div id="matrikulatutaWSn"></div>
-    <br/><br/>
-    <label for="deitura">Deitura (bi izen gutxienez eta lehen letra handia)(*): </label>
-    <input type="text" name="deitura"  class="erantzuna" id="deitura" height="2000px"/>
-    <br/><br/>
-    <label for="nick">Nick(*): </label>
-    <input type="text" name="nick" class="erantzuna" id="nick" width="600px"/>
-    <br/><br/>
-    <label for="pasahitza">Pasahitza(*): </label>
-    <input type="password" name="pasahitza" class="erantzuna" id="pasahitza" width="600px" onChange="PasahitzaEgiaztatu()"/>
-    <br/><br/>
-    <label for="pasahitza2">Pasahitza errepikatu(*): </label>
-    <input type="password" name="pasahitza2" class="erantzuna" id="pasahitza2" width="600px"/>
-	<div id="pasahitzaErakutsi"></div>
-    <br/><br/>
-	<label for="irudiProfil">Irudia(hautazkoa): </label>
-    <input type="file" name="irudiProfil" id="irudiProfil" onchange="previewFile()" >
-    <br/><br/>
-	<label for="botoia">&nbsp</label>
-    <input type="submit" id="botoia" value="Sign Up" name="botoia" onsubmit="egiaztatu()" > &nbsp
-    <input type="reset" value="Borratu" id="reset" ><br><br>
-</form>
-<img src="" id="irudiBistaratua" width="200" style="display: none;">
+	<div class="container-fluid">
+	<div id='page-wrap'>
+		<header class='main' id='h1'>
+		<h1><a href="layoutR.php" class="btn-block">Quiz: Crazy Questions</a></h1>
+	</header>
+	<nav class='main' id='n1' role='navigation'>
+	<div class="row">
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="layoutR.php">Home</a></div>
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="quizzes.php">Quizzes</a></div>
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="credits.php">Credits</a></div>
+		<div class="col-sm-2 col-sm-push-1" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="logIn.php">Log In</a></div>
+		<div class="col-sm-2 col-sm-push-1" ><a class="btn-block" href="signUp.php"  >Sign Up</a></div>
+		</div>
+	</nav>
+	<section class="main" id="s1">
+		<h1>Sign Up</h1>
+		<br/>
+		<p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
+		<div align="center">
+			<form  id="signUp" name="signUp"  action="" method="post" onsubmit="return egiaztatu(this)" enctype="multipart/form-data">
+				<label for="posta">Posta elektronikoa (*): </label> &nbsp; &nbsp;
+				<input type="text" name="posta" id="posta" onChange="matrikulatutaWS()" class="hutsuneak"/>
+				<div id="matrikulatutaWSn"></div>
+				<br/>
+				<label for="deitura">Deitura (*): </label> &nbsp; &nbsp;
+				<input type="text" name="deitura" id="deitura" class="hutsuneak"/>
+				<br/><br/>
+				<label for="nick">Nick(*): </label>
+				<input type="text" name="nick" id="nick" class="hutsuneak"/>
+				<br/><br/>
+				<label for="pasahitza">Pasahitza (*): </label> &nbsp; &nbsp;
+				<input type="password" name="pasahitza" id="pasahitza" class="hutsuneak" onChange="PasahitzaEgiaztatu()"/>
+				<br/><br/>
+				<label for="pasahitza2">Pasahitza errepikatu (*): </label> &nbsp; &nbsp;
+				<input type="password" name="pasahitza2" id="pasahitza2" class="hutsuneak"/>
+				<div id="pasahitzaErakutsi"></div>
+				<br/>
+				<label for="irudiProfil">Irudia (hautazkoa): </label> &nbsp; &nbsp;
+				<input type="file" name="irudiProfil" id="irudiProfil" onchange="previewFile()" >
+				<br/><br/>
+				<input type="submit" id="botoia" value="Sign Up" name="botoia" onsubmit="egiaztatu()" > &nbsp
+				<input type="reset" value="Borratu" id="reset" ><br><br>
+			</form>
+		</a>
+		<img src="" id="irudiBistaratua" width="220px" style="display: none;">
+		</section>
+		<footer class='main' id='f1'>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/jonlegarda/WST19'>Link GITHUB</a>
+		</footer>
+		</div>
+		</div>
 </body>
 </html>

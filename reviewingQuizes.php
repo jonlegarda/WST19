@@ -60,15 +60,12 @@
 	</style>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
 	<title>Quizzes</title>
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />
-	<link rel='stylesheet' 
-		   type='text/css' 
-		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
-		   href='stylesPWS/wide.css' />
-	<link rel='stylesheet' 
-		   type='text/css' 
-		   media='only screen and (max-width: 480px)'
-		   href='stylesPWS/smartphone.css' />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" language="javascript">
 		
@@ -172,47 +169,30 @@
 	</script>
   </head>
   <body>
-  <div id='page-wrap'>
+  <div class="container-fluid">
+	<div id='page-wrap'>
 	<header class='main' id='h1'>
-      
-      <span class="right" style="display:none;"><a href="logOut.php">LogOut</a> </span>
-	<h2>Reviewing Quizes</h2>
-	<div>
-		<?php
-			$postaElektronikoa=$_SESSION["korreoa"];
-			echo "<br>";
-			include 'configEzarri.php';
-			// Konexioa sortu
-			$connection = new mysqli($servername, $username, $password, $dbname);
-			// Konexioa Egiaztatu (Ondo dagoen edo ez)
-			if ($connection->connect_error) {
-				die("Connection failed: " . $connection->connect_error);
-			}
-			$sql = "SELECT IrudiProfil FROM users WHERE PostaElektronikoa='$postaElektronikoa'";
-			$result = $connection->	query($sql);
-			if ($result->num_rows > 0) {
-				echo "Posta: ". $postaElektronikoa;
-				echo "<br>";
-				$row = $result->fetch_assoc();
-			}
-			$connection->close();
-		?>
-	</div>
-    </header>
+		<h1><a href="layoutR.php" class="btn-block">Quiz: Crazy Questions</a></h1>
+	</header>
 	<nav class='main' id='n1' role='navigation'>
-	<span><a href='layoutR.php'>Home</a></span>
-		<span><a href='layoutR.php'>Quizzes</a></span>
-		<span><a href='credits.php'>Credits</a></span>
-		<span><a href='logOut.php'>Log out</a></span>
-		<!--<span><a href='showQuestionsWithImage.php'>Show Question With Image</a></span>
-		<span><a href='showXMLQuestions.php'>Show Questions with XML</a></span>
-		<span><a href='logOut.php' onclick="return myFunction()" >Log Out</a></span>-->
+	<div class="row">
+		<div class="col-sm-2" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="layoutR.php">Home</a></div>
+		<div class="col-sm-2" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="quizzes.php">Quizzes</a></div>
+		<div class="col-sm-2" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="reviewingQuizes.php">Reviewing Quizzes</a></div>
+		<div class="col-sm-2" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="removeQuestion.php">Remove Question</a></div>
+		<div class="col-sm-2" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="credits.php">Credits</a></div>
+		<div class="col-sm-2" ><a class="btn-block" href="logOut.php">Log out</a></div>
+		</div>
 	</nav>
-    <section class="main" id="s1">
-    
-	<div id="divScroll">
-		
+	<section class="main" id="s1">
+	<h1>Reviewing Quizzes</h1>
+	<p><?php
+			$postaElektronikoa=$_SESSION["korreoa"];
+			echo 'Posta:  ' . $postaElektronikoa;
+		?></p>
+	<div id="divScroll" >
 	</div> 
+	
 	<div>
 		<label for="id">Galderaren IDa sartu:</label>
 		<input type="text" name="idGald" id="idGald" class="erantzuna"/>
@@ -252,11 +232,12 @@
 	</form>
     </section>
 	<footer class='main' id='f1'>
-		<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
-		<a href='https://github.com'>Link GITHUB</a>
-	</footer>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/jonlegarda/WST19'>Link GITHUB</a>
+		</footer>
 </div>
-
+</div>
+</div>
 </body>
 </html>
 

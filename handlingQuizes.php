@@ -6,23 +6,15 @@
 <head>
     <meta charset="utf-8">
     <title>Handling Quizes </title>
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        body {
-            background-color: cadetblue;
-        }
-        titulua{
-            font-style: italic;
-            font-size: 40px;
-            color: navy;
-        }
-        label {
+       /* label {
             display: inline-block;
             float: left;
             clear: left;
             width: 300px;
             text-align: right;
         }
-
         input {
             display: inline-block;
             float: left;
@@ -38,12 +30,16 @@
         }
         .erantzuna{
             width: 350px;
-        }
+        }*/
 		
     </style>
 </head>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='stylesPWS/style.css' />	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script type="text/javascript" language="javascript">
 	
 	var xhro1 = new XMLHttpRequest();
@@ -175,51 +171,79 @@
         }
     })
 </script>
-<titulua>Galdera sortu:</titulua>
-<p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
-<br/><br/>
-<form  id="galderenF" name="galderenF"  action="" method="post">
+<div class="container-fluid">
+	<div id='page-wrap'>
+		<header class='main' id='h1'>
+		<h1><a href="layoutR.php" class="btn-block">Quiz: Crazy Questions</a></h1>
+	</header>
+	<nav class='main' id='n1' role='navigation'>
+	<div class="row">
+		<div class="col-sm-3" style="border-right: 3px solid #C5DEC2;"><a class="btn-block" href="layoutR.php">Home</a></div>
+		<div class="col-sm-3" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="quizzes.php">Quizzes</a></div>
+		<div class="col-sm-3" style="border-right: 3px solid #C5DEC2;" ><a class="btn-block" href="credits.php">Credits</a></div>
+		<div class="col-sm-3" ><a class="btn-block" href="logOut.php" onclick="return myFunction()" >Log Out</a></div>
+		</div>
+	</nav>
+	<section class="main" id="s1">
+		<h1>Galdera Sortu</h1>
+		</br>
+		<p><?php if(isset($_SESSION["kautotuta"])){
+			$postaElektronikoa=$_SESSION["korreoa"];
+			echo 'Posta:  ' . $postaElektronikoa;
+		}else{
+			echo 'anonimoa';
+		}
+		?></p>
+		</br>
+		<p>(*) Karakterea duten hutsuneak derrigorrezkoak dira.</p>
+		<br/><br/>
+		<form  id="galderenF" name="galderenF"  action="" method="post">
 
-	<label for="posta">Posta elektronikoa(*): </label>
-    <input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $_SESSION["korreoa"];?>' disabled />
-    <br/><br/>
-    <label for="galderaTestua">Galderaren testua(*): </label>
-    <input type="text" name="galderaTestua"  class="erantzuna" id="galderaTestua" height="2000px"/>
-    <br/><br/>
-    <label for="erantzunZuzena">Erantzun zuzena(*): </label>
-    <input type="text" name="erantzunZuzena" class="erantzuna" id="erantzunZuzena" width="600px"/>
-    <br/><br/>
-    <label for="erantzunOkerra1">Erantzun okerra1(*): </label>
-    <input type="text" name="erantzunOkerra1" class="erantzuna" id="erantzunOkerra1" width="600px"/>
-    <br/><br/>
-    <label for="erantzunOkerra2">Erantzun okerra2(*): </label>
-    <input type="text" name="erantzunOkerra2" class="erantzuna" id="erantzunOkerra2" width="600px"/>
-    <br/><br/>
-    <label for="erantzunOkerra3">Erantzun okerra3(*): </label>
-    <input type="text" name="erantzunOkerra3" class="erantzuna" id="erantzunOkerra3" width="600px"/>
-    <br/><br/>
-    <label for="galderaZail">Galderaren zailtasuna(1-5)(*): </label>
-    <input type="text" name="galderaZail" id="galderaZail"/>
-    <br/><br/>
-    <label for="galderaArloa">Galderaren arloa(*): </label>
-    <input type="text" name="galderaArloa" id="galderaArloa"/>
-    <br/><br/>
-	<input type="button" id="txertatu" name="txertatu" value="Txertatu" onClick="galderaTxertatuXML()"/>
-	<input type="button" id="ikusi" name="ikusi" value="Ikusi" onClick="galderakJaso()"/>
-	<br/><br/>
-	<a href="layoutR.php">ATZERA</a>
-</form>
-<br/>
-<div id="nireGalderaKopurua">
-</div>
-<br/>
-<div id="konektatuenKopurua">
-</div>
-<br/>
-<div id="txertaketaOndo">
-</div>
-<br/>
-<div id="galderak" name="galderak">
-</div>
+			<label for="posta">Posta elektronikoa(*): </label>
+			<input type="text" name="posta" id="posta" class="erantzuna" value='<?php echo $_SESSION["korreoa"];?>' disabled />
+			<br/><br/>
+			<label for="galderaTestua">Galderaren testua(*): </label>
+			<input type="text" name="galderaTestua"  class="erantzuna" id="galderaTestua" height="2000px"/>
+			<br/><br/>
+			<label for="erantzunZuzena">Erantzun zuzena(*): </label>
+			<input type="text" name="erantzunZuzena" class="erantzuna" id="erantzunZuzena" width="600px"/>
+			<br/><br/>
+			<label for="erantzunOkerra1">Erantzun okerra1(*): </label>
+			<input type="text" name="erantzunOkerra1" class="erantzuna" id="erantzunOkerra1" width="600px"/>
+			<br/><br/>
+			<label for="erantzunOkerra2">Erantzun okerra2(*): </label>
+			<input type="text" name="erantzunOkerra2" class="erantzuna" id="erantzunOkerra2" width="600px"/>
+			<br/><br/>
+			<label for="erantzunOkerra3">Erantzun okerra3(*): </label>
+			<input type="text" name="erantzunOkerra3" class="erantzuna" id="erantzunOkerra3" width="600px"/>
+			<br/><br/>
+			<label for="galderaZail">Zailtasuna (1-5)(*): </label>
+			<input type="text" name="galderaZail" id="galderaZail"/>
+			<br/><br/>
+			<label for="galderaArloa">Galderaren arloa(*): </label>
+			<input type="text" name="galderaArloa" id="galderaArloa"/>
+			<br/><br/>
+			<input type="button" id="txertatu" name="txertatu" value="Txertatu" onClick="galderaTxertatuXML()"/>
+			<input type="button" id="ikusi" name="ikusi" value="Ikusi" onClick="galderakJaso()"/>
+			<br/>
+		</form>
+		</section>
+		<section class="main" id="s1">
+		<div id="nireGalderaKopurua">
+		</div>
+		<div id="konektatuenKopurua">
+		</div>
+		<div id="txertaketaOndo">
+		</div>
+		<div id="galderak" name="galderak">
+		</div>
+		</section>
+	
+	<footer class='main' id='f1'>
+			<p><a href="http://en.wikipedia.org/wiki/Quiz" target="_blank">What is a Quiz?</a></p>
+			<a href='https://github.com/jonlegarda/WST19'>Link GITHUB</a>
+		</footer>
+	</div>
+	</div>
 </body>
 </html>
